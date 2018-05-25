@@ -4,8 +4,8 @@ import java.nio.file.Paths
 
 import akka.NotUsed
 import akka.actor.ActorSystem
-import akka.stream.{ActorMaterializer, ClosedShape}
 import akka.stream.scaladsl._
+import akka.stream.{ActorMaterializer, ClosedShape}
 import akka.util.ByteString
 
 /**
@@ -62,4 +62,8 @@ object Example7 extends App {
     ClosedShape
   })
   runnableGraph.run()
+
+  Thread.sleep(2000)
+  system.terminate()
+  system.whenTerminated.onComplete(_ => println("actor-system is terminated...!!!!"))
 }
