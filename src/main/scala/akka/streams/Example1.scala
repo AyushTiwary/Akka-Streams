@@ -1,19 +1,20 @@
 package akka.streams
 
-
-
-import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream._
 import akka.stream.scaladsl._
 
-object Example1 extends App{
+object Example1 extends App {
 
   implicit val system = ActorSystem("Example1")
   implicit val materializer = ActorMaterializer()
+  implicit val ec = system.dispatcher //ExecutionContext
 
-  val source: Source[Int, NotUsed] = Source(1 to 100)
+  val source = Source(1 to 100)
 
-  source.runForeach(i ⇒ println(i))(materializer)
+  val done = source.runForeach(i ⇒ println(i))(materializer)
+
+  done.onComplete(_ ⇒ system.terminate())
+  system.whenTerminated.onComplete(_ => println("actor-system is terminated"))
 
 }
