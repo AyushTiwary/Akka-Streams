@@ -23,7 +23,7 @@ object Example4 extends App {
       .map(s ⇒ ByteString(s + "\n"))
       .toMat(FileIO.toPath(Paths.get(filename)))(Keep.right)
 
-  val result = factorials.map(_.toString).runWith(lineSink("factorial2.txt"))
+  val result = factorials.map(_.toString).runWith(lineSink("target/results/factorial4.txt"))
 
   result.onComplete(_ ⇒ system.terminate())
 

@@ -22,7 +22,7 @@ object Example2 extends App {
   val result: Future[IOResult] =
     factorials
       .map(num ⇒ ByteString(s"$num\n"))
-      .runWith(FileIO.toPath(Paths.get("factorials.txt")))
+      .runWith(FileIO.toPath(Paths.get("target/results/factorials2.txt")))
 
   result.onComplete(_ ⇒ system.terminate())
 

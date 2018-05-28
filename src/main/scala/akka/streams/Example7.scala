@@ -33,11 +33,11 @@ object Example7 extends App {
   val writeAuthors: Sink[Author, NotUsed] =
     Flow[Author]
     .map(s ⇒ ByteString(s + "\n"))
-    .toMat(FileIO.toPath(Paths.get("filename1.txt")))(Keep.left)
+    .toMat(FileIO.toPath(Paths.get("target/results/author7.txt")))(Keep.left)
 
   val writeHashTags: Sink[HashTag, NotUsed] = Flow[HashTag]
     .map(s ⇒ ByteString(s + "\n"))
-    .toMat(FileIO.toPath(Paths.get("filename2.txt")))(Keep.left)
+    .toMat(FileIO.toPath(Paths.get("target/results/hashtag7.txt")))(Keep.left)
 
   val runnableGraph = RunnableGraph.fromGraph(GraphDSL.create() { implicit b =>
     import akka.stream.scaladsl.GraphDSL.Implicits._
